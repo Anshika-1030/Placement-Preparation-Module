@@ -1,0 +1,24 @@
+Node *flatten(Node *root)
+{
+   if(!root || !root->next) return root;
+        Node *temp=root->next;
+        while(temp){
+            root->next=temp->next;
+            temp->next=NULL;
+            Node *trav=temp;
+            temp=root->next;
+            Node *top=trav;
+            while(top){
+                top=top->bottom;
+                trav->bottom=NULL;
+                Node *p=root;
+                Node *t=root->bottom;
+                while(t && t->data<trav->data){
+                    p=t;t=t->bottom;
+                }
+                p->bottom=trav;trav->bottom=t;
+                trav=top;
+            }
+        }
+      return root;  
+}
