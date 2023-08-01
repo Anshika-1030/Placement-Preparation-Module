@@ -1,0 +1,31 @@
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        // Step 1: Count the frequency of each number using a map
+        map<int, int> freq;
+        for (int num : nums) {
+            freq[num]++;
+        }
+        
+        // Step 2: Create a vector of pairs (frequency, number)
+        vector<pair<int, int>> freqPairs;
+        for (auto it : freq) {
+            freqPairs.push_back({it.second, it.first});
+        }
+        
+        // Step 3: Sort the frequency pairs in ascending order
+        sort(freqPairs.begin(), freqPairs.end());
+        
+        // Step 4: Get the top k frequent numbers in reverse order
+        vector<int> result;
+        for (auto it : freqPairs) {
+            result.push_back(it.second);
+        }
+        reverse(result.begin(), result.end());
+        
+        // Step 5: Return the final result
+        // with only the top k frequent numbers
+        vector<int> finalResult(result.begin(), result.begin() + k);
+        return finalResult;
+    }
+};
