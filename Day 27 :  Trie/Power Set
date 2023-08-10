@@ -1,0 +1,42 @@
+class Solution{
+
+private:
+    
+    void sub(string s, int index, string output, vector<string> &ans)
+    {
+        if(index >= s.length())
+        {
+            if(!output.empty())
+                ans.push_back(output);
+            return;
+        }
+            
+        // exclude
+        sub(s, index+1, output, ans);
+        
+        //include
+        char ch = s[index];
+        output += ch;
+        
+        sub(s, index+1, output, ans);
+    }
+    
+    
+    public:
+        vector<string> AllPossibleStrings(string s){
+            
+            vector<string> ans;
+            
+            int index = 0;
+            
+            string output = "";
+            
+            sub(s, index, output, ans);
+            sort(ans.begin(), ans.end());
+            
+            return ans;
+            
+            
+        }
+
+};
