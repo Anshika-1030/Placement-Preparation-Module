@@ -1,0 +1,46 @@
+class Solution 
+{
+    public:
+    //Function to find the maximum profit and the number of jobs done.
+    vector<int> JobScheduling(Job arr[], int n) 
+    { 
+        // your code here
+        vector<int> arrId(n);
+        vector<int> arrProfit(n);
+        vector<int> arrDead(n);
+        vector<int> ans;
+        multimap<int,pair<int,int>> m;
+        for(int i=0;i<n;i++)
+        {
+            m.insert(make_pair(arr[i].profit,make_pair(arr[i].id,arr[i].dead)));
+        }
+        int j=0;
+        for(auto it:m)
+        {
+            arrProfit[j]=it.first;
+            arrId[j]=it.second.first;
+            arrDead[j]=it.second.second;
+            j++;
+        }
+        int count=0;
+        int maxProfit=0;
+        vector<int> v(n+1,-1);
+        for(int i=n-1;i>=0;i--){
+            int index=arrDead[i]-1;
+            while(v[index]>0 && index>=0){
+                index--;
+            }
+            if(index<0){
+                continue;
+            }
+            else{
+            v[index]=arrId[i];
+            count++;
+            maxProfit+=arrProfit[i];
+            }
+        }
+        ans.push_back(count);
+        ans.push_back(maxProfit);
+        return ans;
+    } 
+};
