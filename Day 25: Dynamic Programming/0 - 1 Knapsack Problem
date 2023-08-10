@@ -1,0 +1,26 @@
+class Solution
+{
+    public:
+     int f(int index, int wt[], int val[], int W, int n, vector<vector<int>>&dp) {
+        
+        if(index >= n or W <= 0)return 0;
+        
+        if(wt[index] > W){
+            return f(index+1, wt, val, W, n, dp);
+        }
+        if(dp[index][W]!=-1)return dp[index][W];
+        // pick the element 
+        int pick = val[index] + f(index+1, wt, val, W-wt[index], n, dp);
+        int not_pick = f(index+1, wt, val, W, n, dp);
+        
+        dp[index][W] = max(pick, not_pick);
+        
+        return max(pick, not_pick);
+    }
+    int knapSack(int W, int wt[], int val[], int n) 
+    { 
+       // Your code here
+       vector<vector<int>>dp(n+1, vector<int>(W+1, -1));
+       return f(0, wt, val, W, n, dp);
+    }
+};
