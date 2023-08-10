@@ -1,0 +1,25 @@
+class Solution {
+public:
+        int spaceoptimise(vector<int>& nums){
+         vector<int> currRow(nums.size()+1,0);
+         vector<int> nextRow(nums.size()+1,0);
+
+         for(int curr=nums.size()-1;curr>=0;curr--){
+             for(int prev=curr-1;prev>=-1;prev--){
+                int include=0;
+                    if(prev==-1||nums[curr]>nums[prev])
+                        include=1+nextRow[curr+1];
+                    
+                    //exclude
+                    int exclude=nextRow[prev+1];
+                    currRow[prev+1]= max(include,exclude); 
+                }
+                //shifting 
+                nextRow=currRow;
+        }
+        return nextRow[0];
+    }
+    int lengthOfLIS(vector<int>& nums) {
+        return spaceoptimise(nums);
+    }
+};
