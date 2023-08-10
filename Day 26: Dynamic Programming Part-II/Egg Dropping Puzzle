@@ -1,0 +1,38 @@
+class Solution{
+     private: 
+    int recur(int N,int k, vector<vector<int> > &dp)
+    {
+        if(k<=0)
+        return 0;
+        
+        if(k==1)
+        return 1;
+        
+        if(N==1)
+        return k;
+        
+        if(dp[N][k]!=-1)
+        return dp[N][k];
+        
+        int breakegg,notbreak;
+        int mini=INT_MAX;
+        for(int i=1;i<=k;i++)
+        {
+            breakegg = recur(N-1,i-1,dp);//break
+            notbreak = recur(N,k-i,dp);//not break;
+            
+            mini  = min (mini,max(breakegg,notbreak));
+        }
+        return dp[N][k] = 1+mini;
+    }
+    public:
+    //Function to find minimum number of attempts needed in 
+    //order to find the critical floor.
+    int eggDrop(int n, int k) 
+    {
+        vector<vector<int> > dp (n+1,vector<int> (k+1,-1));
+        
+        return recur(n,k,dp);
+    }
+
+};
