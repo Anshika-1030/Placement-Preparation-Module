@@ -1,0 +1,39 @@
+class Solution
+
+{
+    public:
+    //Function to find the shortest distance of all the vertices
+    //from the source vertex S.
+    vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
+    {
+        // Code here
+             vector<int>key(V,INT_MAX);
+        vector<bool>visited(V,false);
+        key[S]=0;
+        for(int i=0;i<V;i++){
+         int min=INT_MAX;
+         int ind=-1;
+         // we can also decrease the time comlexity to O(Vlog(V)) by using multi set or priority queue
+         for(int j=0;j<V;j++){
+if(visited[j]==false){
+   if(ind==-1||key[j]<key[ind]){
+      ind=j;
+   }
+}
+         }
+visited[ind]=true;
+for(int l=0;l<adj[ind].size();l++){
+if(visited[adj[ind][l][0]]==false){
+   if(key[adj[ind][l][0]]>adj[ind][l][1]+key[ind]){
+key[adj[ind][l][0]]=adj[ind][l][1]+key[ind];
+}
+}
+}
+        }
+        // for(auto value:key){
+        //  cout<<value<<" ";
+        // }
+        // int ans=accumulate(key.begin(),key.end(),0);
+        return key;
+    }
+};
